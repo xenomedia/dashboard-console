@@ -7,10 +7,17 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use GuzzleHttp\Client;
 use PNX\Dashboard\SnapshotsCommand;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
-$application->add(new SnapshotsCommand());
-$application->run();
 
+$client = new Client([
+  'headers' => [
+    'Content-Type' => 'application/json'
+  ]
+]);
+
+$application = new Application();
+$application->add(new SnapshotsCommand($client));
+$application->run();

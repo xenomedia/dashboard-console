@@ -5,7 +5,7 @@
  * Contains PNX\Dashboard\SnapshotsCommand
  */
 
-namespace Pnx\Dashboard;
+namespace PNX\Dashboard;
 
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
@@ -18,6 +18,20 @@ use Symfony\Component\Console\Output\OutputInterface;
  * A command for getting snapshots.
  */
 class SnapshotsCommand extends Command {
+
+
+  /**
+   * @var \GuzzleHttp\Client
+   */
+  protected $client;
+
+  /**
+   * SnapshotsCommand constructor.
+   */
+  public function __construct(Client $client) {
+    parent::__construct();
+    $this->client = $client;
+  }
 
   /**
    * {@inheritdoc}
@@ -37,16 +51,10 @@ class SnapshotsCommand extends Command {
    */
   protected function execute(InputInterface $input, OutputInterface $output) {
 
-    $client = new Client([
+    $options = [
+      'query' => [],
       'base_uri' => $input->getOption('base-url'),
       'auth' => [$input->getOption('username'), $input->getOption('password')],
-      'headers' => [
-        'Content-Type' => 'application/json'
-      ]
-    ]);
-
-    $options = [
-      'query' => []
     ];
 
     $alert_level = $input->getOption('alert-level');
@@ -59,7 +67,7 @@ class SnapshotsCommand extends Command {
       $options['query']['client_id'] = $client_id;
     }
 
-    $response = $client->get('snapshots', $options);
+    $response = $this->client->get('snapshots', $options);
 
     if ($response->getStatusCode() != 200) {
       $output->writeln("Error calling dashboard API");
