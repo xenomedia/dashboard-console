@@ -1,0 +1,20 @@
+application: previousnext/lamp
+
+# This will save on ECS resources, as well as provide a walled
+# off memory allocation to ensure the lib doesn't not go over 128M.
+config:
+  mem_application: 128
+
+prepare: &prepare
+  - composer install --prefer-dist --no-progress
+
+test: &test
+  - bin/robo phpcs
+
+test_pr:
+  setup: *prepare
+  steps: *test
+
+test_head:
+  setup: *prepare
+  steps: *test
