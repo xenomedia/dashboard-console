@@ -93,9 +93,9 @@ class SnapshotsCommand extends Command {
           $site['timestamp'],
           $site['client_id'],
           $site['site_id'],
-          $site['alert_summary']['notice'],
-          $site['alert_summary']['warning'],
-          $site['alert_summary']['error'],
+          $this->formatAlert('notice', $site['alert_summary']['notice']),
+          $this->formatAlert('warning', $site['alert_summary']['warning']),
+          $this->formatAlert('error', $site['alert_summary']['error']),
         ]);
       }
 
@@ -105,4 +105,27 @@ class SnapshotsCommand extends Command {
 
   }
 
+  /**
+   * Formats the alert level count.
+   *
+   * @param string $alert_level
+   *   The alert level.
+   * @param int $count
+   *   The alert level count.
+   *
+   * @return string
+   *   The formatted count.
+   */
+  protected function formatAlert($alert_level, $count) {
+    if ($count > 0) {
+      switch ($alert_level) {
+        case 'error':
+          return "<error>$count</error>";
+
+        case 'warning':
+          return "<comment>$count</comment>";
+      }
+    }
+    return $count;
+  }
 }
