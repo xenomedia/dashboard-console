@@ -30,5 +30,6 @@
   "prefer-stable": true,
   "config": {
     "bin-dir": "bin/"
-  }
+  },
+  "bin": ["dashboard.php"]
 }
