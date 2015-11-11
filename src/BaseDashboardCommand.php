@@ -8,6 +8,7 @@
 namespace PNX\Dashboard;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -68,7 +69,13 @@ abstract class BaseDashboardCommand extends Command {
       $options['query']['alert_level'] = $alert_level;
     }
 
-    $this->doExecute($input, $output, $options);
+    try {
+      $this->doExecute($input, $output, $options);
+    }
+    catch (GuzzleException $e) {
+      $output->writeln("Error communicating with Dashboard API. " . $e->getMessage());
+    }
+
   }
 
   /**
@@ -79,7 +86,7 @@ abstract class BaseDashboardCommand extends Command {
    * execute() method, you set the code to execute by passing
    * a Closure to the setCode() method.
    *
-   * @param InputInterface  $input
+   * @param InputInterface $input
    *   An InputInterface instance
    * @param OutputInterface $output
    *   An OutputInterface instance
