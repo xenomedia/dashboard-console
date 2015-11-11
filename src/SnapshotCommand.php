@@ -7,8 +7,6 @@
 
 namespace PNX\Dashboard;
 
-use GuzzleHttp\Client;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,54 +15,26 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Provides a command for querying a snapshot detail.
  */
-class SnapshotCommand extends Command {
+class SnapshotCommand extends BaseDashboardCommand {
 
   /**
    * The maximum length of the description field.
    */
-  const MAX_LENTH = 45;
-
-  /**
-   * @var \GuzzleHttp\Client
-   */
-  protected $client;
-
-  /**
-   * SnapshotsCommand constructor.
-   */
-  public function __construct(Client $client) {
-    parent::__construct();
-    $this->client = $client;
-  }
+  const MAX_LENGTH = 45;
 
   /**
    * {@inheritdoc}
    */
-  protected function configure() {
+  protected function doConfigure() {
     $this->setName('snapshot')
       ->setDescription("Query the PNX Dashboard API for snapshot data.")
-      ->addOption('base-url', 'u', InputArgument::OPTIONAL, "The base url of the Dashboard API", "https://status.previousnext.com.au")
-      ->addOption('alert-level', 'l', InputArgument::OPTIONAL, "Filter by the alert level.")
-      ->addOption('site-id', 's', InputArgument::OPTIONAL, "The site ID.")
-      ->addOption('username', NULL, InputArgument::OPTIONAL, "The Dashboard API username.", "admin")
-      ->addOption('password', 'p', InputArgument::OPTIONAL, "The Dashboard API password.");
+      ->addOption('site-id', 's', InputArgument::OPTIONAL, "The site ID.");
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function execute(InputInterface $input, OutputInterface $output) {
-
-    $options = [
-      'query' => [],
-      'base_uri' => $input->getOption('base-url'),
-      'auth' => [$input->getOption('username'), $input->getOption('password')],
-    ];
-
-    $alert_level = $input->getOption('alert-level');
-    if (isset($alert_level)) {
-      $options['query']['alert_level'] = $alert_level;
-    }
+  protected function doExecute(InputInterface $input, OutputInterface $output, $options) {
 
     $site_id = $input->getOption('site-id');
 
@@ -122,7 +92,7 @@ class SnapshotCommand extends Command {
    *   The truncated string.
    */
   protected function truncate($value) {
-    return strlen($value) > self::MAX_LENTH ? substr($value, 0, self::MAX_LENTH) . "…" : $value;
+    return strlen($value) > self::MAX_LENGTH ? substr($value, 0, self::MAX_LENGTH) . "…" : $value;
   }
 
   /**

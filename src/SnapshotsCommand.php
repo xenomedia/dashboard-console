@@ -7,8 +7,6 @@
 
 namespace PNX\Dashboard;
 
-use GuzzleHttp\Client;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,50 +15,21 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * A command for getting snapshots.
  */
-class SnapshotsCommand extends Command {
-
-
-  /**
-   * @var \GuzzleHttp\Client
-   */
-  protected $client;
-
-  /**
-   * SnapshotsCommand constructor.
-   */
-  public function __construct(Client $client) {
-    parent::__construct();
-    $this->client = $client;
-  }
+class SnapshotsCommand extends BaseDashboardCommand {
 
   /**
    * {@inheritdoc}
    */
-  protected function configure() {
+  protected function doConfigure() {
     $this->setName('snapshots')
       ->setDescription("Query the PNX Dashboard API for snapshot data.")
-      ->addOption('base-url', 'u', InputArgument::OPTIONAL, "The base url of the Dashboard API", "https://status.previousnext.com.au")
-      ->addOption('alert-level', 'l', InputArgument::OPTIONAL, "Filter by the alert level.")
-      ->addOption('client-id', 'c', InputArgument::OPTIONAL, "Filter by the client ID.")
-      ->addOption('username', NULL, InputArgument::OPTIONAL, "The Dashboard API username.", "admin")
-      ->addOption('password', 'p', InputArgument::OPTIONAL, "The Dashboard API password.");
+      ->addOption('client-id', 'c', InputArgument::OPTIONAL, "Filter by the client ID.");
   }
 
   /**
    * {@inheritdoc}
    */
-  protected function execute(InputInterface $input, OutputInterface $output) {
-
-    $options = [
-      'query' => [],
-      'base_uri' => $input->getOption('base-url'),
-      'auth' => [$input->getOption('username'), $input->getOption('password')],
-    ];
-
-    $alert_level = $input->getOption('alert-level');
-    if (isset($alert_level)) {
-      $options['query']['alert_level'] = $alert_level;
-    }
+  protected function doExecute(InputInterface $input, OutputInterface $output, $options) {
 
     $client_id = $input->getOption('client-id');
     if (isset($client_id)) {
