@@ -8,12 +8,15 @@ Install using composer:
 
 `composer install`
 
-Alternatively, you can download the build phar command from Github.
+Alternatively, you can download the build phar command from the releases page
+ on Github https://github.com/previousnext/dashboard-console/releases/
+
+Once downloaded, you will need to make it executable. If you want it to be
+globally available, copy it to somewhere in your $PATH (e.g. /usr/local/bin).
 
 For example:
 
 ```bash
-wget https://github.com/previousnext/dashboard-console/releases/download/0.0.1/dashboard-console.phar
 chmod +x dashboard-console.phar
 mv dashboard-console.phar /usr/local/bin/dashboard-console
 ```
@@ -42,7 +45,7 @@ other for viewing the detail of an individual site.
 
 To view all snapshots, run the command:
 
-`./dashboard.php snapshots --password <SECRET PASSWORD>`
+`dashboard-console snapshots --password <SECRET PASSWORD>`
 
 To filter to show only snapshots which have _error_ alerts. Add the flag:
 
@@ -62,7 +65,7 @@ output.
 To avoid having to type in the same credentials over and over, you can store
 them in environment variables.
 
-For example, you can add the following to .bash_profle:
+For example, you can add the following to `~/.bashrc`:
 
 ```bash
 export DASHBOARD_USERNAME=<SECRET USERNAME>
