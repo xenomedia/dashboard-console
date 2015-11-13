@@ -5,6 +5,8 @@ application: previousnext/php5.5
 config:
   mem_application: 128
 
+channel: "#dashboard"
+
 prepare: &prepare
   - composer install --prefer-dist --no-progress
 
