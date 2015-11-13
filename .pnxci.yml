@@ -12,7 +12,6 @@ prepare: &prepare
 
 test: &test
   - bin/robo phpcs
-  - bin/robo test
 
 test_pr:
   setup: *prepare
