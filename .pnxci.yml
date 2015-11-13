@@ -1,4 +1,4 @@
-application: previousnext/lamp
+application: previousnext/php5.5
 
 # This will save on ECS resources, as well as provide a walled
 # off memory allocation to ensure the lib doesn't not go over 128M.
@@ -10,6 +10,7 @@ prepare: &prepare
 
 test: &test
   - bin/robo phpcs
+  - bin/robo test
 
 test_pr:
   setup: *prepare
