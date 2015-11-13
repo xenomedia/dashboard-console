@@ -1,9 +1,11 @@
-application: previousnext/lamp
+application: previousnext/php5.5
 
 # This will save on ECS resources, as well as provide a walled
 # off memory allocation to ensure the lib doesn't not go over 128M.
 config:
   mem_application: 128
+
+channel: "#dashboard"
 
 prepare: &prepare
   - composer install --prefer-dist --no-progress
