@@ -5,6 +5,9 @@
  * Console application for PNX Dashboard.
  */
 
+const APP_NAME = 'Dashboard Console';
+const VERSION = '0.0.4';
+
 require __DIR__ . '/vendor/autoload.php';
 
 use GuzzleHttp\Client;
@@ -19,7 +22,7 @@ $client = new Client([
   ]
 ]);
 
-$application = new Application();
+$application = new Application(APP_NAME, VERSION);
 $application->add(new SnapshotsCommand($client));
 $application->add(new SnapshotCommand($client));
 $application->run();
