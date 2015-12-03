@@ -23,7 +23,9 @@ class SnapshotsCommand extends BaseDashboardCommand {
   protected function doConfigure() {
     $this->setName('snapshots')
       ->setDescription("Query the PNX Dashboard API for snapshot data.")
-      ->addOption('client-id', 'c', InputArgument::OPTIONAL, "Filter by the client ID.");
+      ->addOption('client-id', 'c', InputArgument::OPTIONAL, "Filter by the client ID.")
+      ->addOption('check-name', NULL, InputArgument::OPTIONAL, "Filter by the check name.")
+      ->addOption('check-type', NULL, InputArgument::OPTIONAL, "Filter by the check type.");
   }
 
   /**
@@ -34,6 +36,16 @@ class SnapshotsCommand extends BaseDashboardCommand {
     $client_id = $input->getOption('client-id');
     if (isset($client_id)) {
       $options['query']['client_id'] = $client_id;
+    }
+
+    $name = $input->getOption('check-name');
+    if (isset($name)) {
+      $options['query']['name'] = $name;
+    }
+
+    $type = $input->getOption('check-type');
+    if (isset($type)) {
+      $options['query']['type'] = $type;
     }
 
     $response = $this->client->get('snapshots', $options);
