@@ -86,11 +86,12 @@ abstract class BaseDashboardCommand extends Command {
    *
    * @param string $timestamp
    *   The timestamp.
+   *
    * @return string
    *   The formatted timestamp.
    */
   protected function formatTimestamp($timestamp) {
-    $yesterday = time() -  (24 * 60 * 60);
+    $yesterday = time() - (24 * 60 * 60);
     $date      = new \DateTime($timestamp);
 
     if ($date->getTimestamp() > $yesterday) {
