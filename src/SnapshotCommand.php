@@ -49,7 +49,7 @@ class SnapshotCommand extends BaseDashboardCommand {
       $snapshot = json_decode($json, TRUE);
 
       $table = new Table($output);
-      $table->addRow(['Timestamp:', $snapshot['timestamp']]);
+      $table->addRow(['Timestamp:', $this->formatTimestamp($snapshot['timestamp'])]);
       $table->addRow(['Client ID:', $snapshot['client_id']]);
       $table->addRow(['Site ID:', $snapshot['site_id']]);
 

@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+
 /**
  * A command for getting snapshots.
  */
@@ -71,7 +72,7 @@ class SnapshotsCommand extends BaseDashboardCommand {
 
       foreach ($sites as $site) {
         $table->addRow([
-          $site['timestamp'],
+          $this->formatTimestamp($site['timestamp']),
           $site['client_id'],
           $site['site_id'],
           $this->formatAlert('notice', $site['alert_summary']['notice']),
