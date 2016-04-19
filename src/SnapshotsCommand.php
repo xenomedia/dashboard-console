@@ -34,8 +34,8 @@ class SnapshotsCommand extends BaseDashboardCommand {
    */
   protected function doExecute(InputInterface $input, OutputInterface $output, $options) {
 
-    $client_id = $input->getOption('client-id');
-    if (isset($client_id)) {
+    $client_id = $input->getOption('client-id') ?: getenv('DASHBOARD_CLIENT_ID');
+    if ($client_id) {
       $options['query']['client_id'] = $client_id;
     }
 
