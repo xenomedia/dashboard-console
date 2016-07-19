@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains PNX\Dashboard\SnapshotCommand
- */
-
 namespace PNX\Dashboard;
 
 use Symfony\Component\Console\Helper\Table;
@@ -15,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Provides a command for querying a snapshot detail.
  */
-class SnapshotCommand extends BaseDashboardCommand {
+class GetCommand extends BaseDashboardCommand {
 
   /**
    * The maximum length of the description field.
@@ -26,8 +21,8 @@ class SnapshotCommand extends BaseDashboardCommand {
    * {@inheritdoc}
    */
   protected function doConfigure() {
-    $this->setName('snapshot')
-      ->setDescription("Query the PNX Dashboard API for snapshot data.")
+    $this->setName('get')
+      ->setDescription("Get snapshot data.")
       ->addOption('site-id', 's', InputArgument::OPTIONAL, "The site ID.");
   }
 
@@ -124,4 +119,5 @@ class SnapshotCommand extends BaseDashboardCommand {
         return "<info>$alert</info>";
     }
   }
+
 }

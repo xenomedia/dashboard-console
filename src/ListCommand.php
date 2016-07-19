@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains PNX\Dashboard\SnapshotsCommand
- */
-
 namespace PNX\Dashboard;
 
 use Symfony\Component\Console\Helper\Table;
@@ -13,18 +8,17 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 /**
  * A command for getting snapshots.
  */
-class SnapshotsCommand extends BaseDashboardCommand {
+class ListCommand extends BaseDashboardCommand {
 
   /**
    * {@inheritdoc}
    */
   protected function doConfigure() {
-    $this->setName('snapshots')
-      ->setDescription("Query the PNX Dashboard API for snapshot data.")
+    $this->setName('list')
+      ->setDescription("List snapshot data.")
       ->addOption('client-id', 'c', InputArgument::OPTIONAL, "Filter by the client ID.")
       ->addOption('check-name', NULL, InputArgument::OPTIONAL, "Filter by the check name.")
       ->addOption('check-type', NULL, InputArgument::OPTIONAL, "Filter by the check type.")
@@ -67,7 +61,7 @@ class SnapshotsCommand extends BaseDashboardCommand {
       $sites = json_decode($json, TRUE);
       $csv = $input->getOption('csv');
       if ($csv) {
-        $this->formatCSV($output, $sites);
+        $this->formatCsv($output, $sites);
       }
       else {
         $this->formatTable($output, $sites);
@@ -83,7 +77,7 @@ class SnapshotsCommand extends BaseDashboardCommand {
    * @param array $sites
    *   A list of sites.
    */
-  protected function formatCSV(OutputInterface $output, $sites) {
+  protected function formatCsv(OutputInterface $output, $sites) {
     foreach ($sites as $site) {
       $line = array(
         $site['client_id'],
@@ -115,7 +109,7 @@ class SnapshotsCommand extends BaseDashboardCommand {
         'Env',
         'Notice',
         'Warning',
-        'Error'
+        'Error',
       ]);
 
     foreach ($sites as $site) {
@@ -157,4 +151,5 @@ class SnapshotsCommand extends BaseDashboardCommand {
     }
     return $count;
   }
+
 }
