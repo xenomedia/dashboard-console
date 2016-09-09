@@ -33,9 +33,9 @@ abstract class BaseDashboardCommand extends Command {
    * {@inheritdoc}
    */
   protected function configure() {
-    $this->addOption('base-url', 'u', InputArgument::OPTIONAL, "The base url of the Dashboard API", "https://status.previousnext.com.au")
+    $this->addOption('base-url', 'u', InputArgument::OPTIONAL, "The base url of the Dashboard API", "https://dashboard.xenostaging.com")
       ->addOption('alert-level', 'l', InputArgument::OPTIONAL, "Filter by the alert level.")
-      ->addOption('username', NULL, InputArgument::OPTIONAL, "The Dashboard API username.", "admin")
+      ->addOption('username', NULL, InputArgument::OPTIONAL, "The Dashboard API username.", "dash")
       ->addOption('password', 'p', InputArgument::OPTIONAL, "The Dashboard API password.");
     $this->doConfigure();
   }
