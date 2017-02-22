@@ -6,7 +6,11 @@ The dashboard console is a command line client for querying the PNX Dashboard AP
 
 Install using composer:
 
-`composer install`
+```git clone git@github.com:xenomedia/dashboard-console.git
+cd dashboard-console
+composer install
+make phar
+```
 
 Alternatively, you can download the build phar command from the releases page
  on Github https://github.com/previousnext/dashboard-console/releases/
